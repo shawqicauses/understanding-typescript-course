@@ -1,7 +1,6 @@
 .vscode
 node_modules
 build
+dist
 public
-app.js
-using-ts.js
 package-lock.json

@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    // Language and Environment
+    "target": "ES5",
+    "lib": ["ES5", "ScriptHost", "DOM", "DOM.Iterable"],
+
+    // Modules
+    "module": "CommonJS",
+    "rootDir": "./src",
+
+    // JavaScript Support
+    "allowJs": true,
+    "checkJs": true,
+
+    // Emit
+    "outDir": "./dist",
+    "removeComments": true,
+    "noEmitOnError": true,
+
+    // Interop Constraints
+    "isolatedModules": false,
+    "esModuleInterop": false,
+    "forceConsistentCasingInFileNames": false,
+
+    // Type Checking
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true
+  }
+}
