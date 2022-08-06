@@ -6,9 +6,10 @@ function summation(
 ) {
   // if (typeof firstNumber !== "number" || typeof secondNumber !== "number")
   // throw new Error("In-correct inputs")
-  if (printResult)
+  if (printResult) {
     console.log([printPhrase, firstNumber + secondNumber].join(" "))
-  else return firstNumber + secondNumber
+    return undefined
+  } else return firstNumber + secondNumber
 }
 
 // let someNumber: number 👍🏻 Good practice
