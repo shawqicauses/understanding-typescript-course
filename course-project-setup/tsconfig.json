@@ -32,7 +32,8 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "experimentalDecorators": true
   },
   "files": ["./src/app.ts"]
 }

@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "lite-server"
+    "start": "lite-server",
+    "watch": "tsc --watch"
   },
   "keywords": [
     "JavaScript",
@@ -14,5 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "lite-server": "2.6.1"
+  },
+  "dependencies": {
+    "typescript": "5.0.2"
   }
 }

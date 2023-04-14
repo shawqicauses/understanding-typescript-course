@@ -7,8 +7,23 @@
     <script src="./dist/app.js" defer></script>
   </head>
   <body>
-    <input type="text" id="user-input" />
-    <p id="message"></p>
-    <button>Button</button>
+    <template id="project-form">
+      <form>
+        <input
+          id="project-name-input"
+          type="text"
+          name="project-name-input"
+          placeholder="Enter Project Name" />
+        <textarea
+          id="project-description-input"
+          type="text"
+          name="project-description-input"
+          rows="10"
+          cols="30"
+          placeholder="Enter Project Description"></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </template>
+    <div id="app"></div>
   </body>
 </html>

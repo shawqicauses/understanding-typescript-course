@@ -1,89 +1,64 @@
-const names: Array<string> = ["Shawqi", "Hatem"]
-
-const promise: Promise<string> = new Promise(function (resolve) {
-  setTimeout(function () {
-    resolve("This is done!")
-  }, 2000)
-})
-
-promise.then(function (data) {
-  data.split(" ")
-})
-
-function merge<T extends object, U extends object>(
-  firstObject: T,
-  secondObject: U
+// AutoBind Decorator
+function autoBind(
+  target: any,
+  methodName: string,
+  descriptor: PropertyDescriptor
 ) {
-  return Object.assign(firstObject, secondObject)
-}
-
-const mergedObject = merge<
-  { name: string; hobbies: Array<string> },
-  { age: number }
->({ name: "Shawqi", hobbies: ["Reading", "Writing"] }, { age: 20 })
-
-interface Length {
-  length: number
-}
-
-function countAndDescribe<T extends Length>(element: T) {
-  let description = "Got no value!"
-  if (element.length === 1) description = ["Got 1 element"].join(" ")
-  else if (element.length > 1)
-    description = ["Got", element.length, "elements"].join(" ")
-  return [element, description]
-}
-
-console.log(countAndDescribe("Hi there!"))
-console.log(countAndDescribe(["Shawqi", "Hatem"]))
-console.log(countAndDescribe([]))
-
-function extractAndConvert<T, U extends keyof T>(object: T, key: U) {
-  return ["Value", object[key]].join(" ")
-}
-
-console.log(extractAndConvert({ name: "Shawqi Hatem" }, "name"))
-
-class DataStorage<T extends number | string> {
-  private data: T[] = []
-
-  insertItem(item: T) {
-    this.data.push(item)
+  const methodOriginal = descriptor.value
+  const descriptorAdjusted: PropertyDescriptor = {
+    configurable: true,
+    get() {
+      const boundFunction = methodOriginal.bind(this)
+      return boundFunction
+    }
   }
 
-  removeItem(item: T) {
-    if (this.data.indexOf(item) !== -1)
-      this.data.splice(this.data.indexOf(item), 1)
+  return descriptorAdjusted
+}
+
+class ProjectForm {
+  appElement: HTMLDivElement
+  templateElement: HTMLTemplateElement
+  element: HTMLFormElement
+  nameInputElement: HTMLInputElement
+  descriptionInputElement: HTMLInputElement
+
+  constructor() {
+    this.appElement = document.getElementById("app") as HTMLDivElement
+    this.templateElement = document.getElementById(
+      "project-form"
+    )! as HTMLTemplateElement
+
+    const nodeImported = document.importNode(this.templateElement.content, true)
+    this.element = nodeImported.firstElementChild as HTMLFormElement
+
+    this.nameInputElement = this.element.querySelector(
+      "#project-name-input"
+    ) as HTMLInputElement
+
+    this.descriptionInputElement = this.element.querySelector(
+      "#project-description-input"
+    ) as HTMLInputElement
+
+    this.configure()
+    this.attach()
   }
 
-  getItems() {
-    return [...this.data]
+  @autoBind
+  private submit(event: Event) {
+    event.preventDefault()
+    console.log(this.nameInputElement)
+  }
+
+  private configure() {
+    this.element.addEventListener("submit", this.submit)
+    this.nameInputElement.value = "Project Name"
+    this.descriptionInputElement.value = "Project Description"
+  }
+
+  private attach() {
+    this.appElement.insertAdjacentElement("afterbegin", this.element)
   }
 }
 
-const stringStorage = new DataStorage<string>()
-stringStorage.insertItem("Shawqi")
-stringStorage.insertItem("Hatem")
-stringStorage.removeItem("Shawqi")
-console.log(stringStorage)
-
-interface CourseGoal {
-  title: string
-  description: string
-  date: string
-}
-
-function createCourseGoal(
-  title: string,
-  description: string,
-  date: string
-): CourseGoal {
-  let courseGoal: Partial<CourseGoal> = {}
-  courseGoal.title = title
-  courseGoal.description = description
-  courseGoal.date = date
-  return courseGoal as CourseGoal
-}
-
-const something: ReadonlyArray<string> = ["Shawqi", "Hatem"]
-const anotherThing: Readonly<string[]> = ["Shawqi", "Hatem"]
+const projectForm = new ProjectForm()
